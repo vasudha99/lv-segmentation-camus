@@ -1,26 +1,26 @@
 # Left Ventricular Segmentation using U-Net
 
-This project uses a U-Net convolutional neural network to segment the left ventricular cavity from echocardiography images. It predicts the LV endocardium as a binary mask and compares the output with expert annotations from the CAMUS dataset.
+This project segments the left ventricular cavity in echocardiography images using a U-Net convolutional neural network. It uses the CAMUS dataset, which contains cardiac ultrasound images and expert segmentation masks. The model learns to predict the LV endocardium mask from each ultrasound image.
+
+The project includes a notebook for exploring CAMUS images and annotations, followed by a training notebook that preprocesses the images, builds a U-Net, trains it, and evaluates segmentation predictions. The data is divided by patient into training, validation and test sets so that patients in the test set are not included during training.
 
 ## Dataset
 
-The [CAMUS dataset](https://www.creatis.insa-lyon.fr/Challenge/camus/) contains echocardiography images in two-chamber and four-chamber views, with annotations at end-diastole and end-systole. The project reads the original `.mhd` images and their paired `.raw` files from `data/camus/training/patientXXXX/`. Place the training dataset in that directory before running the notebooks. CAMUS is distributed for non-commercial scientific research and requires attribution.
+Download the [CAMUS dataset](https://www.creatis.insa-lyon.fr/Challenge/camus/) and place its original patient folders inside `data/camus/training/`. Each patient folder should contain the original `.mhd` files and their associated `.raw` files. The code reads the files locally; Google Drive is not required. CAMUS data use is subject to the dataset's research and attribution terms.
 
-## Method
+## Run
 
-Images are resized to 256 × 256 pixels and normalised to the range 0–1. Masks are resized using nearest-neighbour interpolation, and the LV endocardium is extracted as the segmentation target. The U-Net uses an encoder-decoder architecture with skip connections. Training combines binary cross-entropy and Dice loss.
+Install Python dependencies using:
 
-The baseline notebook demonstrates training and visualisation. The patient-level notebook separates patients across training, validation and testing, trains the model and evaluates predictions using Dice and IoU.
+```bash
+pip install -r requirements.txt
+```
 
-## Results
+Open `notebooks/01_explore_camus.ipynb` to inspect the images. Run `notebooks/02_unet_patient_level_split.ipynb` to train and evaluate the model. Start Jupyter from the repository root, or set the `CAMUS_TRAINING_DIR` environment variable to your dataset's training folder. Training results, checkpoints and prediction images are saved in `results/`, which is excluded from Git.
 
-The initial baseline notebook reported a Dice score of approximately 0.868 using an image-level split. This is not a patient-independent test result. The patient-level experiment must be run before reporting independently evaluated metrics.
+The model uses 256 × 256 grayscale images and binary masks for the LV endocardium. Performance is calculated using Dice and Intersection over Union (IoU). No new test scores are reported here because the uploaded training notebook has not yet been run on the full dataset.
 
-## Running the project
-
-Install dependencies using `pip install -r requirements.txt`, open the notebooks from the repository root, and place CAMUS training data in `data/camus/training/`. A GPU is recommended for training.
-
-## Technologies
+## Tools
 
 Python, TensorFlow/Keras, SimpleITK, OpenCV, NumPy, pandas, scikit-learn and Matplotlib.
 
