@@ -18,7 +18,7 @@ pip install -r requirements.txt
 
 Open `notebooks/01_explore_camus.ipynb` to inspect the images. Run `notebooks/02_unet_patient_level_split.ipynb` to train and evaluate the model. Start Jupyter from the repository root, or set the `CAMUS_TRAINING_DIR` environment variable to your dataset's training folder. Training results, checkpoints and prediction images are saved in `results/`, which is excluded from Git.
 
-The model uses 256 × 256 grayscale images and binary masks for the LV endocardium. Performance is calculated using Dice and Intersection over Union (IoU). No new test scores are reported here because the uploaded training notebook has not yet been run on the full dataset.
+The model uses 256 × 256 grayscale images and binary masks for the LV endocardium. Performance is calculated using Dice and Intersection over Union (IoU). The training notebook evaluates segmentation performance using Dice score and Intersection over Union (IoU), and saves the evaluation results and prediction visualisations.
 
 ## Tools
 
